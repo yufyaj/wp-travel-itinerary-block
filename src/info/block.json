@@ -20,6 +20,10 @@
 			"type": "string",
 			"default": "center"
 		},
+        "lineColor": {
+            "type": "string",
+            "default": "#b4c9a1"
+        },
         "style": { 
 			"type": "object"
 		}

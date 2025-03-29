@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, RichText, InspectorControls, PanelColorSettings, BlockControls } from '@wordpress/block-editor';
-import { PanelBody, ToolbarGroup, ToolbarButton } from '@wordpress/components'; // GradientPicker は不要
+import { PanelBody, ToolbarGroup, ToolbarButton, ColorPicker } from '@wordpress/components'; // GradientPicker は不要
 import { alignLeft, alignCenter, alignRight } from '@wordpress/icons';
 
 /**
@@ -45,11 +45,13 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
         infoText,
         textAlign = 'center', // デフォルト値
         style,
+        lineColor
     } = attributes;
 
 	// CSSカスタムプロパティを設定（値が undefined なら設定しない）
     const blockStyle = {
         textAlign: textAlign,
+        '--line-color': lineColor
     };
 
 	// useBlockProps が style 属性 (文字色) と blockStyle をマージして適用
@@ -75,7 +77,17 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 			</BlockControls>
 
 			<InspectorControls>
-				{/* 文字色の設定は標準UI */}
+				<PanelBody title={ __( '線の設定', 'wp-travel-itinerary-block' ) } initialOpen={ false }>
+					<div className="components-base-control">
+						<label className="components-base-control__label">
+							{ __( '線の色', 'wp-travel-itinerary-block' ) }
+						</label>
+						<ColorPicker
+							color={ lineColor }
+							onChange={ ( value ) => setAttributes( { lineColor: value } ) }
+						/>
+					</div>
+				</PanelBody>
 			</InspectorControls>
 
 			<div { ...blockProps }>
