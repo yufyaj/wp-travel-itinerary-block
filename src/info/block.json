@@ -1,0 +1,44 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wp-travel-itinerary/info",
+	"version": "0.1.3", 
+	"title": "移動情報ブロック",
+	"category": "widgets",
+	"icon": "controls-forward", 
+	"description": "地点間の移動手段や所要時間を表示するブロックです。",
+	"parent": [ "wp-travel-itinerary/parent" ],
+	"textdomain": "wp-travel-itinerary-block",
+	"attributes": {
+		"infoText": { 
+			"type": "string",
+			"source": "html",
+			"selector": ".info-text-content",
+			"default": ""
+		},
+		"textAlign": { 
+			"type": "string",
+			"default": "center"
+		},
+        "style": { 
+			"type": "object"
+		}
+	},
+	"editorScript": "file:./index.js", 
+	"style": "file:./style-index.css", 
+	"supports": {
+		"html": false, 
+		"reusable": false, 
+		"color": { 
+            "background": false, 
+            "text": true,      
+            "gradients": false, 
+			"link": false, 
+			"__experimentalDefaultControls": { 
+				"text": true
+			}
+        }
+		
+		
+	}
+}

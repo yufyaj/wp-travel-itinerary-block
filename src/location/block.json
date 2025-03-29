@@ -1,0 +1,62 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "wp-travel-itinerary/location",
+	"version": "0.1.5", 
+	"title": "地点ブロック",
+	"category": "widgets",
+	"icon": "location",
+	"description": "旅程内の駅や場所を表すブロックです。",
+	"parent": "wp-travel-itinerary/parent",
+	"textdomain": "wp-travel-itinerary-block",
+	"attributes": {
+		"locationName": {
+			"type": "string",
+			"source": "html",
+			"selector": ".location-name",
+			"default": ""
+		},
+		"textAlign": {
+			"type": "string",
+			"default": "center"
+		},
+		"width": { 
+			"type": "number"
+		},
+        "useCustomBorder": {
+            "type": "boolean",
+            "default": false
+        },
+        "showBorder": {
+            "type": "boolean"
+        },
+        "borderColor": {
+            "type": "string"
+        },
+        "borderWidth": {
+            "type": "number"
+        },
+        "style": {
+			"type": "object"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"color": {
+            "background": true,
+            "text": true,
+            "link": false,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			},
+			"__experimentalDuotone": false,
+			"__experimentalSkipSerialization": false
+        },
+		"__experimentalAlignment": true
+	}
+}

@@ -1,0 +1,83 @@
+// --- Default Styles (Vertical) ---
+.wp-block-wp-travel-itinerary-parent.travel-itinerary-container {
+	// ★ CSSカスタムプロパティのデフォルト値を定義 (JSで設定されるが念のため)
+	--location-common-width: 180px;
+	--info-common-width: 100px;
+	--info-vertical-min-height: 60px;
+	--show-borders: 0;
+	--border-color: #ccc;
+	--border-width: 1px;
+	--border-style: none;
+
+	border: none; // 親ブロックの枠線を削除
+	border-radius: 4px;
+	overflow: visible;
+	padding: 20px 0;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 400px; // スマホ表示時の最大幅
+	display: flex;
+	flex-direction: column;
+	align-items: center; // 子要素を中央揃え (Locationブロックなど)
+	gap: 0;
+
+	// コンテナ全体の配置
+	&.alignleft { margin-left: 0; margin-right: auto; }
+	&.alignright { margin-left: auto; margin-right: 0; }
+	&.aligncenter { margin-left: auto; margin-right: auto; }
+
+	// 子ブロックに枠線の設定を継承
+	.wp-block-wp-travel-itinerary-location,
+	.travel-location-block {
+		--show-border: var(--show-borders, 0);
+		--border-color: var(--border-color, #ccc);
+		--border-width: var(--border-width, 1px);
+		--border-style: var(--border-style, none);
+	}
+}
+
+// --- Horizontal Styles for Desktop ---
+@media (min-width: 768px) {
+	.wp-block-wp-travel-itinerary-parent.travel-itinerary-container.orientation-horizontal {
+		flex-direction: row; // 横並びに変更
+		max-width: 95%;     // PC表示時の最大幅
+		align-items: center; // 子要素を上下中央揃えに変更
+		justify-content: center; // 子要素を中央に配置
+		flex-wrap: wrap;
+
+		// --- Horizontal Inner Block Adjustments ---
+		// 子要素 (Location または Info ブロック)
+		> .travel-location-block,
+		> .travel-info-block,
+		> .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block { // エディタ用セレクタも含めておく
+			flex-grow: 0; // width指定を優先
+			flex-basis: auto; // width指定を優先
+			flex-shrink: 0; // 縮まない
+			width: auto; // ベースは自動幅
+			margin: 0 5px; // 上下のマージンを0に、左右のマージンを少しに
+			max-width: none;
+
+			// Locationブロック固有
+			&.travel-location-block,
+			&.wp-block-wp-travel-itinerary-location { // フロントエンドとエディタ用
+				// 個別幅が style 属性で設定されていなければ共通幅を使う
+				width: var(--location-common-width, 180px); // 共通幅を参照
+				padding: 15px 20px;
+				min-width: 50px; // 念のため最低幅
+			}
+		}
+
+		// --- Horizontal Info Block Adjustments ---
+		> .travel-info-block,
+		> .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block-wp-travel-itinerary-info { // エディタ用セレクタ
+			width: var(--info-common-width, 100px); // Info共通幅を参照
+			padding: 10px 0;
+			min-width: 30px; // 念のため最低幅
+			align-self: stretch; // 線を上下に伸ばすため
+			position: relative;
+			flex-grow: 0.1;   // 少しだけ grow させて、スペースを確保する
+			// flex-basis: auto; // 上で設定済み
+			flex-shrink: 0;   // 上で設定済み
+		}
+	}
+}

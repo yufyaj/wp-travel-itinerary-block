@@ -1,0 +1,167 @@
+/**
+ * The following styles are loaded ONLY on the editor.
+ */
+.wp-block-wp-travel-itinerary-parent.travel-itinerary-container {
+	padding: 20px 0;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 400px;
+	// ★ エディタでもカスタムプロパティのデフォルト値を定義
+	--location-common-width: 180px;
+	--info-common-width: 100px;
+	--info-vertical-min-height: 60px;
+	border: none; // 親ブロックの枠線を削除
+
+	// エディタのインナーブロックの不要なマージン等をリセット
+	// ★ セレクタをより具体的に、!important を使用
+	.block-editor-inner-blocks {
+		width: 100%;
+
+		> .block-editor-block-list__layout {
+			margin: 0 !important;
+			padding: 0 !important;
+			display: flex !important;
+			flex-direction: column !important;
+			align-items: center !important;
+			width: 100% !important;
+			gap: 0 !important;
+
+			// エディタの余分な装飾を削除
+			&::before,
+			&::after {
+				display: none !important;
+			}
+
+			> .block-editor-block-list__block {
+				margin: 0 !important;
+				padding: 0 !important;
+				width: auto !important;
+				max-width: none !important;
+
+				&::before,
+				&::after {
+					display: none !important;
+				}
+
+				&[data-type="wp-travel-itinerary/location"] {
+					width: var(--location-common-width) !important;
+					padding: 15px 20px !important;
+					min-width: 50px !important;
+				}
+
+				&[data-type="wp-travel-itinerary/info"] {
+					width: var(--info-common-width) !important;
+					padding: 10px 0 !important;
+					min-width: 30px !important;
+					align-self: center !important;
+					position: relative !important;
+					flex: 0 0 var(--info-common-width) !important;
+					display: flex !important;
+					align-items: center !important;
+					justify-content: center !important;
+
+					// 横並び時も横線のまま
+					&::before {
+						content: '';
+						position: absolute;
+						top: 50%;
+						left: 0;
+						right: 0;
+						height: 1px;
+						width: auto;
+						background-color: currentColor;
+						transform: translateY(-50%);
+					}
+
+					> [data-block] {
+						margin: 0 !important;
+						width: 100% !important;
+						max-width: var(--info-common-width) !important;
+						text-align: center !important;
+						background-color: #000;
+						color: #fff;
+						position: relative;
+						z-index: 1;
+					}
+				}
+			}
+		}
+
+		> .block-list-appender {
+			position: relative;
+			margin: 15px auto !important;
+			display: flex;
+			justify-content: center;
+			width: 100%;
+		}
+	}
+
+	&.orientation-horizontal {
+		max-width: 95% !important;
+		
+		.block-editor-inner-blocks {
+			> .block-editor-block-list__layout {
+				display: flex !important;
+				flex-direction: row !important;
+				flex-wrap: nowrap !important;
+				align-items: center !important;
+				justify-content: center !important;
+				gap: 5px !important;
+
+				> .block-editor-block-list__block {
+					flex: 0 0 auto !important;
+					margin: 0 !important;
+					
+					&[data-type="wp-travel-itinerary/location"] {
+						width: var(--location-common-width) !important;
+						padding: 15px 20px !important;
+						min-width: 50px !important;
+					}
+
+					&[data-type="wp-travel-itinerary/info"] {
+						width: var(--info-common-width) !important;
+						padding: 10px 0 !important;
+						min-width: 30px !important;
+						height: 40px !important;
+						align-self: center !important;
+						position: relative !important;
+						flex: 0 0 var(--info-common-width) !important;
+						display: flex !important;
+						align-items: center !important;
+						justify-content: center !important;
+
+						&::before {
+							content: '';
+							position: absolute;
+							top: 50% !important;
+							left: 0 !important;
+							right: 0 !important;
+							height: 1px !important;
+							width: 100% !important;
+							background-color: currentColor;
+							transform: translateY(-50%) !important;
+						}
+
+						> [data-block] {
+							margin: 0 !important;
+							width: 100% !important;
+							max-width: var(--info-common-width) !important;
+							text-align: center !important;
+							background-color: #000;
+							color: #fff;
+							position: relative;
+							z-index: 1;
+						}
+					}
+				}
+
+				> .block-list-appender {
+					flex: 0 0 auto;
+					margin: 0 10px !important;
+				}
+			}
+		}
+	}
+}
+
+// メディアクエリは必要なし - エディタでは orientation クラスで制御

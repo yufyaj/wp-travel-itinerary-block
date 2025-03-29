@@ -1,0 +1,23 @@
+.wp-block-wp-travel-itinerary-parent {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+}
+
+.wp-block-wp-travel-itinerary-parent[data-orientation="vertical"] {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.wp-block-wp-travel-itinerary-parent[data-orientation="horizontal"] {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.wp-block-wp-travel-itinerary-info {
+    border: var(--info-border-width, 1px) solid var(--info-border-color, #ccc);
+    border-radius: 4px;
+    padding: 10px;
+} 

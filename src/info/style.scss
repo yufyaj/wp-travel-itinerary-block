@@ -1,0 +1,143 @@
+// スタイルはエディタとフロントエンドの両方に適用
+.wp-block-wp-travel-itinerary-info,
+.travel-info-block {
+	position: relative;
+	color: #666;
+	font-size: 0.9em;
+	width: 100%; // デフォルトは100%
+	box-sizing: border-box;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden; // ★ overflow: hidden は維持
+
+	// --- デフォルト (縦並び) ---
+	flex-direction: column;
+	padding: 0 10px;
+	min-height: var(--info-vertical-min-height, 60px); // ★ カスタムプロパティ適用
+
+	.info-text-content {
+		display: inline-block;
+		position: relative;
+		background-color: transparent;
+		padding: 5px 5px; // 上下パディングで線との隙間を作る
+		line-height: 1.5;
+		z-index: 1;
+		order: 2;
+	}
+
+	// 接続線
+	&::before,
+	&::after {
+		content: '';
+		display: var(--show-line, var(--show-lines, block)); // 線の表示/非表示を制御
+		background: var(--line-gradient, var(--line-color, #b4c9a1));
+        margin: 0;
+        width: auto;
+        height: auto;
+        max-width: none;
+        flex-grow: 0; // デフォルトは grow しない
+	}
+
+	// 縦線スタイル (デフォルト)
+	&::before { // 上線
+		width: 2px;
+		flex-grow: 1; // 高さを埋める
+		order: 1;
+	}
+	&::after { // 下線
+		width: 2px;
+		flex-grow: 1; // 高さを埋める
+		order: 3;
+	}
+
+	// --- 横並び (PC幅限定) ---
+	// ★ メディアクエリと親クラスで限定
+	@media (min-width: 768px) {
+		.wp-block-wp-travel-itinerary-parent.orientation-horizontal & {
+			flex-direction: row; // 横方向
+			padding: 10px 0;
+			width: var(--info-common-width, 100px); // 共通幅
+			min-height: auto;
+			align-items: center;
+			flex-grow: 0.1; // 親CSSからの継承 (スペース確保のため)
+			flex-shrink: 0;
+			flex-basis: auto;
+
+			.info-text-content {
+				padding: 0 5px; // 左右パディング
+				white-space: nowrap;
+				flex-grow: 0;
+				flex-shrink: 0;
+			}
+
+			// 横線スタイル
+			&::before { // 左線
+				width: auto;
+	            flex-grow: 1; // 利用可能な幅を埋める
+				height: 2px;
+				order: 1;
+                margin-bottom: 0;
+				margin-right: 5px; // 文字との隙間
+			}
+			&::after { // 右線
+	            width: auto;
+	            flex-grow: 1; // 利用可能な幅を埋める
+				height: 2px;
+				order: 3;
+                margin-top: 0;
+				margin-left: 5px; // 文字との隙間
+			}
+		}
+	} // メディアクエリ終了
+}
+
+// --- Editor Specific Adjustments ---
+// ★ エディタ専用スタイルを強化
+.editor-styles-wrapper {
+    // Infoブロック本体のラッパーに適用
+    .block-editor-block-list__block[data-type="wp-travel-itinerary/info"] {
+        // 縦並び時（デフォルト）
+        &:not(.wp-block-wp-travel-itinerary-parent.orientation-horizontal &) { // ★ 親がhorizontalでない場合
+            > [data-block].wp-block-wp-travel-itinerary-info { // ★ ブロック本体にスタイル適用
+                flex-direction: column !important;
+                padding: 0 10px !important;
+                width: 100% !important; // 縦並び時は幅100%
+                min-height: var(--info-vertical-min-height, 60px) !important;
+
+                .info-text-content { padding: 5px 5px !important; }
+
+                &::before, &::after {
+                    margin: 0 !important; width: 2px !important; height: auto !important; flex-grow: 1 !important; max-width: none !important;
+                    margin-left: 0 !important; margin-right: 0 !important; background: var(--line-gradient, var(--line-color, #b4c9a1)) !important;
+                    display: var(--show-line, var(--show-lines, block)) !important;
+                }
+                &::before { order: 1 !important; }
+                &::after { order: 3 !important; }
+            }
+        }
+
+        // 横並び時
+        &.wp-block-wp-travel-itinerary-parent.orientation-horizontal & { // ★ 親がhorizontalの場合
+            > [data-block].wp-block-wp-travel-itinerary-info { // ★ ブロック本体にスタイル適用
+                flex-direction: row !important;
+                padding: 10px 0 !important;
+                width: var(--info-common-width, 100px) !important; // 共通幅
+                min-height: auto !important;
+                align-items: center !important;
+
+                .info-text-content { padding: 0 5px !important; }
+
+                &::before, &::after {
+                    flex-grow: 1 !important; width: auto !important; height: 2px !important;
+                    max-width: none !important; // ★ いったんmax-width解除して伸びるか確認
+                    margin-top: 0 !important; margin-bottom: 0 !important; background: var(--line-gradient, var(--line-color, #b4c9a1)) !important;
+                    display: var(--show-line, var(--show-lines, block)) !important;
+                }
+                &::before { order: 1 !important; margin-right: 5px !important; margin-left: 0 !important;}
+                &::after { order: 3 !important; margin-left: 5px !important; margin-right: 0 !important;}
+            }
+        }
+    }
+}
